@@ -1,15 +1,17 @@
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $pass = "";
-    $dbname = "RED";
+// PHP Data Objects(PDO) Sample Code:
+try {
+    $conn = new PDO("sqlsrv:server = tcp:websql.database.windows.net,1433; Database = sqlRED", "dima", "projectcdv@2");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch (PDOException $e) {
+    print("Error connecting to SQL Server.");
+    die(print_r($e));
+}
 
-    $dsn = "mysql:host=localhost;dbname=RED";
-
-    $dbh = new PDO($dsn, $username, $pass);
-
-    global $dbh;
-
-    //$conn = mysqli_connect('localhost', 'root', '', 'RED') or die('error: '.mysqli_error($conn));
-    /*global $conn*/
+// SQL Server Extension Sample Code:
+$connectionInfo = array("UID" => "dima", "pwd" => "projectcdv@2", "Database" => "sqlRED", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+$serverName = "tcp:websql.database.windows.net,1433";
+$conn = sqlsrv_connect($serverName, $connectionInfo);
 ?>
+///dima projectcdv@2
