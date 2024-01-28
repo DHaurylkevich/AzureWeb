@@ -1,4 +1,6 @@
 <?php
+require_once "config/config.php";
+
 session_start();
 if(!isset($_GET['category'])){
         header("Location: index.php?category=Shoes");
@@ -6,6 +8,11 @@ if(!isset($_GET['category'])){
 else{
     $category = $_GET['category'];
 }
+
+if(!$conn) {
+    die("Error connecting to the database.");
+}
+
 ?>
 
 <!DOCTYPE html>
