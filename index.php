@@ -55,7 +55,7 @@ if(!$conn) {
         <?php
         require_once "config/config.php";
 
-        $stmt = $dbh->prepare("SELECT name FROM categoty");
+        $stmt = $conn->prepare("SELECT name FROM categoty");
 
         $stmt->execute();
 
