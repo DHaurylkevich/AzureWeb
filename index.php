@@ -57,25 +57,28 @@ require_once "config/config.php";
     </div>
     <section>
         <h2><?=$listCategory['name']?></h2>
-        <div class="products ">
+        <div class="products">
             <?php
+            // Замените URL на URL вашего Spring API
+            $apiUrl = "https://testspring69.azurewebsites.net/products?category=" . $listCategory['name'];
+            $response = file_get_contents($apiUrl);
 
+            // Декодируем JSON-ответ в ассоциативный массив
+            $products = json_decode($response, true);
 
-
-            $products = "test";
             foreach ($products as $product) {
-            ?>
-            <a href="views/product_form.php?id=<?=$product['id']?>">
-                <div class="product">
-                    <img src="<?= $product['image']?>">
-                    <h3><?= $product['title']?></h3>
-                    <p><?=$product['price']?> zł</p>
-                </div>
-                <?php
-                }
                 ?>
-            </a>
-
+                <a href="views/product_form.php?id=<?= $product['id'] ?>">
+                    <div class="product">
+                        <img src="<?= $product['image'] ?>">
+                        <h3><?= $product['title'] ?></h3>
+                        <p><?= $product['price'] ?> zł</p>
+                    </div>
+                </a>
+                <?php
+            }
+            ?>
+        </div>
     </section>
 
 </main>
