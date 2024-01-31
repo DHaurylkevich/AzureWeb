@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="sqlRED@websql.database.windows.net" uuid="58a90f54-c01c-49c2-9d6c-e11be791e94c">
+      <driver-ref>azure.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://websql.database.windows.net:1433;encrypt=true;trustServerCertificate=false;loginTimeout=30;database=sqlRED;</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="AZURE_SQL_DB_SERVER" value="/subscriptions/312363dc-a27c-482b-aabb-53fca45d947a/resourceGroups/cdvweb/providers/Microsoft.Sql/servers/websql" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>
