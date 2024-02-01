@@ -93,7 +93,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
         $productid = $_GET['id'];
 
         // Заменяем код для взаимодействия с базой данных на обращение к вашему Spring API
-        $apiUrl = "https://testspring69.azurewebsites.net/products?id=" . $productid;
+        $apiUrl = "https://testspring69.azurewebsites.net/products/=" . $productid;
         $response = file_get_contents($apiUrl);
 
         // Декодируем JSON-ответ в ассоциативный массив
