@@ -50,15 +50,15 @@ session_start();
 
             // Формируем массив с идентификаторами продуктов из $_SESSION['cart']
             $ids = array_keys($_SESSION['cart']);
-            // Генерируем строку с плейсхолдерами для подготовленного запроса
-            $placeholders = implode(',', array_fill(0, count($ids), '?'));
-            // Подготавливаем SQL-запрос
-            $sql = "SELECT * FROM products WHERE id IN ($placeholders) ORDER BY title ASC";
-            $stmt = $dbh->prepare($sql);
-            // Привязываем значения к плейсхолдерам
-            $stmt->execute($ids);
-            // Получаем результат
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+
+        // Заменяем код для взаимодействия с базой данных на обращение к вашему Spring API
+        $apiUrl = "http://localhost:17000/products?id=" . implode('&id=', $ids);
+        $response = file_get_contents($apiUrl);
+
+        // Декодируем JSON-ответ в ассоциативный массив
+        $result = json_decode($response, true);
             ?>
         <table>
 
