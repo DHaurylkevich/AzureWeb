@@ -61,7 +61,7 @@ require_once "config/config.php";
         <div class="products">
             <?php
             // Замените URL на URL вашего Spring API
-            $apiUrl = "https://testspring69.azurewebsites.net/products?category=" . $category;
+            $apiUrl = "https://testspring69.azurewebsites.net/products?category=" .urlencode($category);
             $response = file_get_contents($apiUrl);
 
             // Декодируем JSON-ответ в ассоциативный массив
