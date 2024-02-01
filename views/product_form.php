@@ -83,10 +83,6 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
             ?>
             <a href="../index.php?category=<?= $listCategory['name'] ?>" class="category-item"><?= $listCategory['name'] ?></a>
         <?php }?>
-        <a href="#Shorts" class="category-item">PANTS/SHORTS</a>
-        <a href="#Polo" class="category-item">POLO</a>
-        <a href="#Shirts" class="category-item">SHIRTS</a>
-        <a href="#Pajamas" class="category-item">PAJAMAS</a>
     </div>
     <div class="product-border">
         <?php
@@ -97,37 +93,17 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
         $response = file_get_contents($apiUrl);
 
         // Декодируем JSON-ответ в ассоциативный массив
-        $images = json_decode($response, true);
+        $product = json_decode($response, true);
 
-        foreach ($images as $image) {
         ?>
 
         <div class="product-pictures">
             <div class="main-photo ">
                 <img class="main-photo"
-                     src="<?= $image['image_1']?>">
-            </div>
-            <div class="gallery">
-                <div class="gallery-container">
-                    <div class="gallery-images">
-                        <img src="<?= $image['image_1']?>"
-                             alt="Photo 0">
-                        <img src="<?= $image['image_2']?>"
-                             alt="Photo 1">
-                        <img src="<?= $image['image_3']?>"
-                             alt="Photo 2">
-                        <img src="<?= $image['image_4']?>"
-                             alt="Photo 3">
-                        <img src="<?= $image['image_5']?>"
-                             alt="Photo 1">
-                    </div>
-                </div>
+                     src="<?= $product['image']?>">
             </div>
         </div>
         <?php
-        }
-        $apiUrl = "https://testspring69.azurewebsites.net/products?id=" . $productid;
-        $response = file_get_contents($apiUrl);
 
         // Декодируем JSON-ответ в ассоциативный массив
         $products = json_decode($response, true);
