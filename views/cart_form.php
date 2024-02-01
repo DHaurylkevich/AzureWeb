@@ -54,7 +54,7 @@ session_start();
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
 
         // Заменяем код для взаимодействия с базой данных на обращение к вашему Spring API
-        $apiUrl = "http://localhost:17000/products?id=" . implode('&id=', $ids);
+        $apiUrl = "https://testspring69.azurewebsites.net/products?id=" . implode('&id=', $ids);
         $response = file_get_contents($apiUrl);
 
         // Декодируем JSON-ответ в ассоциативный массив
