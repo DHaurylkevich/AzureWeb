@@ -50,17 +50,18 @@ require_once "config/config.php";
         foreach ($listCategorys as $listCategory) {
             ?><a href="index.php?action=on&category=<?= $listCategory['name'] ?>" class="category-item"><?= $listCategory['name'] ?></a>
 
-        <?php }?>
+        <?php }
+        $category = $_GET['category'] ?? '';?>
         <a href="#Polo" class="category-item">POLO</a>
         <a href="#Shirts" class="category-item">SHIRTS</a>
         <a href="#Pajamas" class="category-item">PAJAMAS</a>
     </div>
     <section>
-        <h2><?=$listCategory['name']?></h2>
+        <h2><?=$category?></h2>
         <div class="products">
             <?php
             // Замените URL на URL вашего Spring API
-            $apiUrl = "https://testspring69.azurewebsites.net/products?category=" . $listCategory['name'];
+            $apiUrl = "https://testspring69.azurewebsites.net/products?category=" . $category;
             $response = file_get_contents($apiUrl);
 
             // Декодируем JSON-ответ в ассоциативный массив
