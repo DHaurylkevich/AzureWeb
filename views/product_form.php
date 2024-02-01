@@ -73,13 +73,13 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 <main>
     <div class="category">
         <?php
+        $apiUrl = "https://testspring69.azurewebsites.net/categories";
+        $response = file_get_contents($apiUrl);
 
-        $stmt = $dbh->prepare("SELECT name FROM categoty");
+        // Декодируем JSON-ответ в ассоциативный массив
+        $listCategorys = json_decode($response, true);
 
-        $stmt->execute();
-
-        $listCategorys = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($listCategorys as $listCategory){
+        foreach ($listCategorys as $listCategory) {
             ?>
             <a href="../index.php?category=<?= $listCategory['name'] ?>" class="category-item"><?= $listCategory['name'] ?></a>
         <?php }?>
@@ -92,11 +92,13 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
         <?php
         $productid = $_GET['id'];
 
-        $stmt = $dbh->prepare("SELECT * FROM image WHERE id = :id");
-        $stmt->bindParam(':id', $productid, PDO::PARAM_STR);
-        $stmt->execute();
+        // Заменяем код для взаимодействия с базой данных на обращение к вашему Spring API
+        $apiUrl = "https://testspring69.azurewebsites.net/products?id=" . $productid;
+        $response = file_get_contents($apiUrl);
 
-        $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Декодируем JSON-ответ в ассоциативный массив
+        $images = json_decode($response, true);
+
         foreach ($images as $image) {
         ?>
 
@@ -124,13 +126,11 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
         </div>
         <?php
         }
-        $select = "SELECT * FROM products WHERE id = :id";
+        $apiUrl = "https://testspring69.azurewebsites.net/products?id=" . $productid;
+        $response = file_get_contents($apiUrl);
 
-        $checkProductStmt = $dbh->prepare($select);
-        $checkProductStmt->bindParam(':id', $productid, PDO::PARAM_STR);
-        $checkProductStmt->execute();
-
-        $products = $checkProductStmt->fetchAll(PDO::FETCH_ASSOC);
+        // Декодируем JSON-ответ в ассоциативный массив
+        $products = json_decode($response, true);
 
         foreach ($products as $product){
         ?>
