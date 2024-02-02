@@ -42,8 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //Username
     $username = htmlspecialchars(trim($_POST["username"]));
-
-    // Отправка данных на Spring-сервер
+// Отправка данных на Spring-сервер
     $springApiUrl = "https://testspring69.azurewebsites.net/users/create";
     $springData = [
         'username' => $username,
@@ -63,11 +62,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $context = stream_context_create($options);
     $result = file_get_contents($springApiUrl, false, $context);
 
+// Добавьте этот код для отладки
+    echo "Spring API URL: $springApiUrl<br>";
+    echo "Spring Data: " . json_encode($springData) . "<br>";
+    echo "Result from Spring API: " . $result . "<br>";
+
     if ($result === FALSE) {
         $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika";
         header("Location: ../views/registration_form.php");
         exit();
     }
+
 
     $resultData = json_decode($result, true);
 
