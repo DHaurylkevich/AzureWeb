@@ -2,6 +2,7 @@
 session_start();
 $totalPrice = 0;
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,7 @@ $totalPrice = 0;
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles_elements/css/styles.css">
     <link rel="stylesheet" href="../styles_elements/css/login.css">
-    </head>
+</head>
 
 <body>
 <header id="header">
@@ -30,8 +31,8 @@ $totalPrice = 0;
                 <img src="https://cdn-icons-png.flaticon.com/512/1374/1374128.png">
                 <?php
                 $totalQuantity = 0;
-                if(isset($_SESSION['cart'])){
-                    foreach($_SESSION['cart'] as $item){
+                if (isset($_SESSION['cart'])) {
+                    foreach ($_SESSION['cart'] as $item) {
                         $totalQuantity += $item['quantity'];
                     }
                 }
@@ -53,43 +54,46 @@ $totalPrice = 0;
                 <th>Count</th>
                 <th>Action</th>
             </tr>
-        <?php
-        if(isset($_SESSION['cart']) && $totalQuantity != 0){
+            <?php
+            if (isset($_SESSION['cart']) && $totalQuantity != 0) {
 
             $ids = array_keys($_SESSION['cart']);
 
-            foreach ($ids as $id){
-                $apiUrl = "https://testspring69.azurewebsites.net/products/" .urlencode($id);
-                $response = file_get_contents($apiUrl);
+            foreach ($ids as $id) {
+                echo $id;
+            $apiUrl = "https://testspring69.azurewebsites.net/products/" . urlencode($id);
+            $response = file_get_contents($apiUrl);
 
-                $products = json_decode($response, true);
+            $products = json_decode($response, true);
 
-                if($products){
-                    foreach($products as $product){
-                        ?>
-                        <tr>
-                            <td><?=$product['id'] ?></td>
-                            <td><?=$product['image'] ?> </td>
-                            <td><?=$product['title'] ?></td>
-                            <td><?=$product['price']?></td>
-                            <td class="action">
-                                <input style="padding: 0px" class="inp" type="text" name="quantity[<?=$product['id']?>]" value="<?=$_SESSION['cart'][$product['id']]['quantity']?>">
-                                <button type="submit" name="update">Update</button>
-                            </td>
-                            <td>
-                                <a href="../models/cart_proces.php?action=del&id=<?=$product['id']?>">Delete</a>
-                            </td>
-
-                        </tr>
-                        <?php
-                        $totalPrice += ($_SESSION['cart'][$product['id']]['quantity'] * $product['price']);
-                        $_SESSION['totalPrice'] = $totalPrice;
-                    }
-                    ?>
+            if ($products) {
+            foreach ($products as $product) {
+                ?>
+                <tr>
+                    <td><?= $product['id'] ?></td>
+                    <td><?= $product['image'] ?> </td>
+                    <td><?= $product['title'] ?></td>
+                    <td><?= $product['price'] ?></td>
+                    <td class="action">
+                        <input style="padding: 0px" class="inp" type="text"
+                               name="quantity[<?= $product['id'] ?>]"
+                               value="<?= $_SESSION['cart'][$product['id']]['quantity'] ?>">
+                        <button type="submit" name="update">Update</button>
+                    </td>
+                    <td>
+                        <a href="../models/cart_proces.php?action=del&id=<?= $product['id'] ?>">Delete</a>
+                    </td>
+                </tr>
+                <?php
+                $totalPrice += ($_SESSION['cart'][$product['id']]['quantity'] * $product['price']);
+                $_SESSION['totalPrice'] = $totalPrice;
+            }
+            ?>
         </table>
-
     </form>
-    <div><p style="color: white;">Total price: <?= $totalPrice?></p></div>
+    <div>
+        <p style="color: white;">Total price: <?= $totalPrice ?></p>
+    </div>
     <div class="buttons">
         <a href="order_form.php">
             <button value="Buy" name="submit" type="submit" class="button-buy">
@@ -98,25 +102,23 @@ $totalPrice = 0;
         </a>
     </div>
     <?php
-                }else{
-                    echo "<p>No products in the cart.</p>";
-                }
+            } else {
+                echo "<p>No products in the cart.</p>";}
             }
-        }else{
-            echo "<p>Your Cart is empty. Please add some products.</p>";
-        }
+            } else {
+                echo "<p>Your Cart is empty. Please add some products.</p>";
+            }
 
-        if (isset($_SESSION["error_message"])){
-            echo <<< ERROR
-        <div class="callout callout-danger">
-           <h5>Błąd!</h5>
-           <p>$_SESSION[error_message]</p>
-        </div>
-        ERROR;
-            unset($_SESSION["error_message"]);
-        }
-        ?>
-
+    if (isset($_SESSION["error_message"])) {
+        echo <<< ERROR
+                <div class="callout callout-danger">
+                   <h5>Błąd!</h5>
+                   <p>$_SESSION[error_message]</p>
+                </div>
+                ERROR;
+        unset($_SESSION["error_message"]);
+    }
+    ?>
 </main>
 <footer class="footer">
     <div class="footer-content">
