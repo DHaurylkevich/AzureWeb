@@ -61,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['id'] = session_id();
         $_SESSION['id_users'] = $resultData['data']['id'];
         $_SESSION['username'] = $resultData['data']['username'];
+        $_SESSION['user_type'] = $resultData['data']['user_type'];
 
         if ($_SESSION['user_type'] == 'user') {
             header("Location: ../views/user_page.php");
