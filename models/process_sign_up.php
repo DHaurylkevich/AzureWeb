@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($errors)) {
         $_SESSION["error_message"] = implode("<br>", $errors);
         header("Location: ../views/registration_form.php");
-        //exit();
+        exit();
     }
 
     $email = $_POST["email"];
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST["password"] != $_POST["cpassword"]) {
         $_SESSION["error_message"] = "Hasła muszą być identyczne";
         header("Location: ../views/registration_form.php");
-        //exit();
+        exit();
     }
 
     //Username
@@ -55,7 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result === FALSE) {
         $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika";
-        echo("Nie udało się zarejestrować użytkownika1");
         header("Location: ../views/registration_form.php");
         exit();
     }
@@ -68,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['id_users'] = $resultData['data']['id'];
         $_SESSION['username'] = $resultData['data']['username'];
 
-        if ($_SESSION['user_form'] == 'user') {
+        if ($_SESSION['user_type'] == 'user') {
             header("Location: ../views/user_page.php");
             exit();
         }
