@@ -60,7 +60,6 @@ $totalPrice = 0;
             $ids = array_keys($_SESSION['cart']);
 
             foreach ($ids as $id) {
-                echo $id;
             $apiUrl = "https://testspring69.azurewebsites.net/products/" . urlencode($id);
             $response = file_get_contents($apiUrl);
 
