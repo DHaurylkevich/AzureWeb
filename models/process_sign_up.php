@@ -46,15 +46,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ];
 
     $context = stream_context_create($options);
-    $result = file_get_contents($springApiUrl, false, $context);
+
+// Инициализация cURL-сессии
+    $ch = curl_init($springApiUrl);
+
+// Установка параметров запроса
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($springData));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+// Выполнение запроса
+    $result = curl_exec($ch);
+
+// Закрытие cURL-сессии
+    curl_close($ch);
 
 // Добавьте этот код для отладки
     echo "Spring API URL: $springApiUrl<br>";
     echo "Spring Data: " . json_encode($springData) . "<br>";
     echo "Result from Spring API: " . $result . "<br>";
 
-    echo $_SESSION["error_message"];
-
+    if (session_start()) {
+        echo "Сеансы активированы.";
+    } else {
+        echo "Сеансы не активированы.";
+    }
 
     if ($result === FALSE) {
         $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika";
@@ -64,9 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     $resultData = json_decode($result, true);
-
-    echo $resultData['data']['user_type'];
-
 
     // Проверка ответа от Spring-сервера
     $_SESSION['id'] = session_id();
