@@ -64,23 +64,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $resultData = json_decode($result, true);
 
-    // Проверка ответа от Spring-сервера
-    $_SESSION['id'] = session_id();
-    $_SESSION['id_users'] = $resultData['id'];
-    $_SESSION['username'] = $resultData['username'];
-    $_SESSION['user_type'] = $resultData['user_type'];
+    if(!Empty($result)) {
+        $_SESSION['id'] = session_id();
+        $_SESSION['id_users'] = $resultData['id'];
+        $_SESSION['username'] = $resultData['username'];
+        $_SESSION['user_type'] = $resultData['user_type'];
 
-    echo "id ". $_SESSION['id_users'];
-    echo "name ". $_SESSION['username'];
-    echo "user type ". $_SESSION['user_type'];
+        echo "id " . $_SESSION['id_users'];
+        echo "name " . $_SESSION['username'];
+        echo "user type " . $_SESSION['user_type'];
 
 
-    if ($_SESSION['user_type'] == "user") {
-        header("Location: ../views/user_page.php");
-        exit();
-    }
-    $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika: " . $resultData['message'];
+        if ($_SESSION['user_type'] == "user") {
+            header("Location: ../views/user_page.php");
+            exit();
+        }
+    }else {
+        $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika: " . $resultData['message'];
         header("Location: ../views/registration_form.php");
         exit();
+    }
 }
 ?>
