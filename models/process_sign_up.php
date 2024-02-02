@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'username' => $username,
         'email' => $email,
         'password' => $_POST["password"],
-        'user_type' => 'regular'  // Указать нужный тип пользователя
+        'user_type' => "admin"  // Указать нужный тип пользователя
     ];
 
     $options = [
@@ -69,7 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result === FALSE) {
         $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika";
-        header("Location: ../views/registration_form.php");
+        echo("Nie udało się zarejestrować użytkownika1");
+        //header("Location: ../views/registration_form.php");
         exit();
     }
 
@@ -89,8 +90,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         exit();
     } else {
-        $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika: " . $resultData['message'];
-        header("Location: ../views/registration_form.php");
+        echo("Nie udało się zarejestrować użytkownika: " . $resultData['message']);
+        //$_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika: " . $resultData['message'];
+        //header("Location: ../views/registration_form.php");
         exit();
     }
 }
