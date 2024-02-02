@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Декодируем JSON-ответ в ассоциативный массив
     $emailList = json_decode($response, true);
+    echo $emailList;
 
     try{
         if (!empty($emailList)) {
