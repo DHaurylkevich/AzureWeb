@@ -19,10 +19,10 @@ $totalPrice = 0;
     <div class="header-menu">
         <a href="../index.php"><img id="logo"
                                     src="https://logos-world.net/wp-content/uploads/2022/01/Playboi-Carti-Emblem.png"></a>
-        <div class="header-menu-item "><a href="News.php">News</a> </div>
-        <div class="header-menu-item"><a href="Sales.php">Sales</a> </div>
-        <div class="header-menu-item "><a href="FAQ.php">FAQ</a> </div>
-        <div class="header-menu-item "><a href="Contacts.php">Contacts</a> </div>
+        <div class="header-menu-item "><a href="News.php">News</a></div>
+        <div class="header-menu-item"><a href="Sales.php">Sales</a></div>
+        <div class="header-menu-item "><a href="FAQ.php">FAQ</a></div>
+        <div class="header-menu-item "><a href="Contacts.php">Contacts</a></div>
         <div class="account"><a href="user_page.php"><img
                         src="https://cdn-icons-png.flaticon.com/512/1250/1250689.png"></a>
         </div>
@@ -46,49 +46,50 @@ $totalPrice = 0;
 <main>
     <form action="../models/cart_proces.php" method="post">
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Image</th>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Count</th>
-                <th>Action</th>
-            </tr>
             <?php
             if (isset($_SESSION['cart']) && $totalQuantity != 0) {
 
             $ids = array_keys($_SESSION['cart']);
 
             foreach ($ids as $id) {
-            $apiUrl = "https://testspring69.azurewebsites.net/products/" . urlencode($id);
-            $response = file_get_contents($apiUrl);
+                $apiUrl = "https://testspring69.azurewebsites.net/products/" . urlencode($id);
+                $response = file_get_contents($apiUrl);
 
-            $product = json_decode($response, true);
+                $product = json_decode($response, true);
 
-            if ($response) {
-                ?>
-                <tr>
-                    <td><?= $product['id'] ?></td>
-                    <td><?= $product['image'] ?> </td>
-                    <td><?= $product['title'] ?></td>
-                    <td><?= $product['price'] ?></td>
-                    <td class="action">
-                        <input style="padding: 0px" class="inp" type="text"
-                               name="quantity[<?= $product['id'] ?>]"
-                               value="<?= $_SESSION['cart'][$product['id']]['quantity'] ?>">
-                        <button type="submit" name="update">Update</button>
-                    </td>
-                    <td>
-                        <a href="../models/cart_proces.php?action=del&id=<?= $product['id'] ?>">Delete</a>
-                    </td>
-                </tr>
-                <?php
-            } else {
-                echo "<p>No products in the cart.</p>";
+                if ($response) {
+                    ?>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Count</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td><?= $product['id'] ?></td>
+                        <td><?= $product['image'] ?> </td>
+                        <td><?= $product['title'] ?></td>
+                        <td><?= $product['price'] ?></td>
+                        <td class="action">
+                            <input style="padding: 0px" class="inp" type="text"
+                                   name="quantity[<?= $product['id'] ?>]"
+                                   value="<?= $_SESSION['cart'][$product['id']]['quantity'] ?>">
+                            <button type="submit" name="update">Update</button>
+                        </td>
+                        <td>
+                            <a href="../models/cart_proces.php?action=del&id=<?= $product['id'] ?>">Delete</a>
+                        </td>
+                    </tr>
+                    <?php
+                } else {
+                    echo "<p>No products in the cart.</p>";
+                }
             }
-            }
-                $totalPrice += ($_SESSION['cart'][$product['id']]['quantity'] * $product['price']);
-                $_SESSION['totalPrice'] = $totalPrice;
+            $totalPrice += ($_SESSION['cart'][$product['id']]['quantity'] * $product['price']);
+            $_SESSION['totalPrice'] = $totalPrice;
             ?>
         </table>
     </form>
@@ -103,9 +104,9 @@ $totalPrice = 0;
         </a>
     </div>
     <?php
-            } else {
-                echo "<p>Your Cart is empty. Please add some products.</p>";
-            }
+    } else {
+        echo "<p>Your Cart is empty. Please add some products.</p>";
+    }
 
     if (isset($_SESSION["error_message"])) {
         echo <<< ERROR
@@ -118,13 +119,11 @@ $totalPrice = 0;
     }
     ?>
 </main>
+</body>
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-copyright">©&nbsp;2023 Red.com</div>
     </div>
 </footer>
-<script>
-</script>
-</body>
 
 </html>
