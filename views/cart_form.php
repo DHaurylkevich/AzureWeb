@@ -1,5 +1,6 @@
 <?php
 session_start();
+$totalPrice = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,68 +44,63 @@ session_start();
 
 <main>
     <form action="../models/cart_proces.php" method="post">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Count</th>
+                <th>Action</th>
+            </tr>
         <?php
         if(isset($_SESSION['cart']) && $totalQuantity != 0){
 
             $ids = array_keys($_SESSION['cart']);
 
-            $placeholders = implode(',', array_fill(0, count($ids), '?'));
+            foreach ($ids as $id){
+                $apiUrl = "https://testspring69.azurewebsites.net/products/" .urlencode($id);
+                $response = file_get_contents($apiUrl);
 
-            // Заменяем код для взаимодействия с базой данных на обращение к вашему Spring API
+                $products = json_decode($response, true);
 
-            $apiUrl = "https://testspring69.azurewebsites.net/products/" . implode('&id=', $ids);
-            $response = file_get_contents($apiUrl);
-
-            // Декодируем JSON-ответ в ассоциативный массив
-            $result = json_decode($response, true);
-            ?>
-        <table>
-
+                if($products){
+                    foreach($products as $product){
+                        ?>
                         <tr>
-                            <th>ID</th>
-                            <th>Image</th>
-                            <th>Title</th>
-                            <th>Price</th>
-                            <th>Count</th>
-                            <th>Action</th>
-                        </tr>
-            <?php
-            if($result){
-            foreach($result as $row){
-            ?>
-                        <tr>
-                            <td><?=$row['id'] ?></td>
-                            <td><?=$row['image'] ?> </td>
-                            <td><?=$row['title'] ?></td>
-                            <td><?=$row['price']?></td>
-                            <td class="action in[">
-                                <input style="padding: 0px" class="inp" type="text" name="quantity[<?=$row['id']?>]" value="<?=$_SESSION['cart'][$row['id']]['quantity']?>">
+                            <td><?=$product['id'] ?></td>
+                            <td><?=$product['image'] ?> </td>
+                            <td><?=$product['title'] ?></td>
+                            <td><?=$product['price']?></td>
+                            <td class="action">
+                                <input style="padding: 0px" class="inp" type="text" name="quantity[<?=$product['id']?>]" value="<?=$_SESSION['cart'][$product['id']]['quantity']?>">
                                 <button type="submit" name="update">Update</button>
                             </td>
                             <td>
-                                <a href="../models/cart_proces.php?action=del&id=<?=$row['id']?>">Delete</a>
+                                <a href="../models/cart_proces.php?action=del&id=<?=$product['id']?>">Delete</a>
                             </td>
 
                         </tr>
-                <?php
-                $totalPrice += ($_SESSION['cart'][$row['id']]['quantity'] * $row['price']);
-                $_SESSION['totalPrice'] = $totalPrice;
-                }
-            ?>
-                    </table>
+                        <?php
+                        $totalPrice += ($_SESSION['cart'][$product['id']]['quantity'] * $product['price']);
+                        $_SESSION['totalPrice'] = $totalPrice;
+                    }
+                    ?>
+        </table>
 
     </form>
-                <div><p style="color: white;">Total price: <?= $totalPrice?></p></div>
-                <div class="buttons">
-                    <a href="order_form.php">
-                    <button value="Buy" name="submit" type="submit" class="button-buy">
-                        <p>Buy</p>
-                    </button>
-                    </a>
-                </div>
-                <?php
-            }else{
-                echo "<p>No products in the cart.</p>";
+    <div><p style="color: white;">Total price: <?= $totalPrice?></p></div>
+    <div class="buttons">
+        <a href="order_form.php">
+            <button value="Buy" name="submit" type="submit" class="button-buy">
+                <p>Buy</p>
+            </button>
+        </a>
+    </div>
+    <?php
+                }else{
+                    echo "<p>No products in the cart.</p>";
+                }
             }
         }else{
             echo "<p>Your Cart is empty. Please add some products.</p>";
