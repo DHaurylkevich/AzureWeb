@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'username' => $username,
         'email' => $_POST["email"],
         'password' => $_POST["password"],
-        'user_type' => "admin"  // Указать нужный тип пользователя
+        'user_type' => "user"  // Указать нужный тип пользователя
     ];
 
     $options = [
@@ -64,21 +64,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $resultData = json_decode($result, true);
 
     // Проверка ответа от Spring-сервера
-    if ($resultData['status'] === 'success') {
         $_SESSION['id'] = session_id();
         $_SESSION['id_users'] = $resultData['data']['id'];
         $_SESSION['username'] = $resultData['data']['username'];
 
-        if ($_SESSION['user_form'] == 'admin') {
-            header("Location: ../admin/admin.php");
-        } else {
+        if ($_SESSION['user_form'] == 'user') {
             header("Location: ../views/user_page.php");
         }
         exit();
-    } else {
+
         $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika: " . $resultData['message'];
         header("Location: ../views/registration_form.php");
         exit();
-    }
 }
 ?>
