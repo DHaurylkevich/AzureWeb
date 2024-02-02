@@ -83,6 +83,10 @@ $totalPrice = 0;
                     </td>
                 </tr>
                 <?php
+            } else {
+                echo "<p>No products in the cart.</p>";
+            }
+            }
                 $totalPrice += ($_SESSION['cart'][$product['id']]['quantity'] * $product['price']);
                 $_SESSION['totalPrice'] = $totalPrice;
             ?>
@@ -99,9 +103,6 @@ $totalPrice = 0;
         </a>
     </div>
     <?php
-            } else {
-                echo "<p>No products in the cart.</p>";}
-            }
             } else {
                 echo "<p>Your Cart is empty. Please add some products.</p>";
             }
