@@ -63,10 +63,9 @@ $totalPrice = 0;
             $apiUrl = "https://testspring69.azurewebsites.net/products/" . urlencode($id);
             $response = file_get_contents($apiUrl);
 
-            $products = json_decode($response, true);
+            $product = json_decode($response, true);
 
             if ($response) {
-            foreach ($products as $product) {
                 ?>
                 <tr>
                     <td><?= $product['id'] ?></td>
@@ -86,7 +85,6 @@ $totalPrice = 0;
                 <?php
                 $totalPrice += ($_SESSION['cart'][$product['id']]['quantity'] * $product['price']);
                 $_SESSION['totalPrice'] = $totalPrice;
-            }
             ?>
         </table>
     </form>
