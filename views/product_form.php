@@ -104,6 +104,8 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
             </div>
         </div>
         <?php
+        $apiUrl = "https://testspring69.azurewebsites.net/products/=" . $productid;
+        $response = file_get_contents($apiUrl);
 
         // Декодируем JSON-ответ в ассоциативный массив
         $products = json_decode($response, true);
