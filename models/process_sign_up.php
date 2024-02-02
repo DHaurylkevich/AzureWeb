@@ -49,18 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $context = stream_context_create($options);
     $result = file_get_contents($springApiUrl, false, $context);
 
-// Добавьте этот код для отладки
-    echo "Spring API URL: $springApiUrl<br>";
-    echo "Spring Data: " . json_encode($springData) . "<br>";
-    echo "Result from Spring API: " . $result . "<br>";
-
-
     if ($result === FALSE) {
         $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika";
         header("Location: https://webcdv.azurewebsites.net/views/registration_form.php");
         exit();
     }
-
 
     $resultData = json_decode($result, true);
 
@@ -69,11 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['id_users'] = $resultData['id'];
         $_SESSION['username'] = $resultData['username'];
         $_SESSION['user_type'] = $resultData['user_type'];
-
-        echo "id " . $_SESSION['id_users'];
-        echo "name " . $_SESSION['username'];
-        echo "user type " . $_SESSION['user_type'];
-
 
         if ($_SESSION['user_type'] == "user") {
             header("Location: https://webcdv.azurewebsites.net/views/user_page.php");
