@@ -24,8 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: registration_form.php");
         exit();
     }
-    require_once "../config/config.php";
+    $apiUrl = "https://testspring69.azurewebsites.net/products/";
+    $response = file_get_contents($apiUrl);
 
+    // Декодируем JSON-ответ в ассоциативный массив
+    $product = json_decode($response, true);
     $select = "SELECT * FROM users WHERE email = :email";
     $checkUserStmt = $dbh->prepare($select);
     $checkUserStmt->bindParam(':email', $email, PDO::PARAM_STR);

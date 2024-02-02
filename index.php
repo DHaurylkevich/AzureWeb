@@ -52,9 +52,7 @@ require_once "config/config.php";
 
         <?php }
         $category = $_GET['category'] ?? '';?>
-        <a href="#Polo" class="category-item">POLO</a>
-        <a href="#Shirts" class="category-item">SHIRTS</a>
-        <a href="#Pajamas" class="category-item">PAJAMAS</a>
+
     </div>
     <section>
         <h2><?=$category?></h2>
