@@ -46,19 +46,17 @@ session_start();
         <?php
         if(isset($_SESSION['cart']) && $totalQuantity != 0){
 
-            require_once "../config/config.php";
-
-            // Формируем массив с идентификаторами продуктов из $_SESSION['cart']
             $ids = array_keys($_SESSION['cart']);
 
-        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+            $placeholders = implode(',', array_fill(0, count($ids), '?'));
 
-        // Заменяем код для взаимодействия с базой данных на обращение к вашему Spring API
-        $apiUrl = "https://testspring69.azurewebsites.net/products?id=" . implode('&id=', $ids);
-        $response = file_get_contents($apiUrl);
+            // Заменяем код для взаимодействия с базой данных на обращение к вашему Spring API
 
-        // Декодируем JSON-ответ в ассоциативный массив
-        $result = json_decode($response, true);
+            $apiUrl = "https://testspring69.azurewebsites.net/products/" . implode('&id=', $ids);
+            $response = file_get_contents($apiUrl);
+
+            // Декодируем JSON-ответ в ассоциативный массив
+            $result = json_decode($response, true);
             ?>
         <table>
 

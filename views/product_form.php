@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-require_once "../config/config.php";
-
 if (isset($_GET['action']) && $_GET['action'] == "add") {
 
     $id = intval($_GET['id']);

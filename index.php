@@ -1,6 +1,5 @@
 <?php
-require_once "config/config.php";
-
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +43,6 @@ require_once "config/config.php";
         $apiUrl = "https://testspring69.azurewebsites.net/categories";
         $response = file_get_contents($apiUrl);
 
-        // Декодируем JSON-ответ в ассоциативный массив
         $listCategorys = json_decode($response, true);
 
         foreach ($listCategorys as $listCategory) {
@@ -58,11 +56,9 @@ require_once "config/config.php";
         <h2><?=$category?></h2>
         <div class="products">
             <?php
-            // Замените URL на URL вашего Spring API
             $apiUrl = "https://testspring69.azurewebsites.net/products?category=" .urlencode($category);
             $response = file_get_contents($apiUrl);
 
-            // Декодируем JSON-ответ в ассоциативный массив
             $products = json_decode($response, true);
 
             foreach ($products as $product) {
@@ -119,5 +115,4 @@ require_once "config/config.php";
     }
 </script>
 </body>
-
 </html>
