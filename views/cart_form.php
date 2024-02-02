@@ -65,7 +65,7 @@ $totalPrice = 0;
 
             $products = json_decode($response, true);
 
-            if ($products) {
+            if ($response) {
             foreach ($products as $product) {
                 ?>
                 <tr>
