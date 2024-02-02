@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         exit();
     } else {
-        echo("Nie udało się zarejestrować użytkownika: " . $resultData['message']);
+        echo("Nie udało się zarejestrować użytkownika: " . $resultData['status']);
         //$_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika: " . $resultData['message'];
         //header("Location: ../views/registration_form.php");
         exit();
