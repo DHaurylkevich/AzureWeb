@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $springData = [
         'username' => $username,
         'email' => $_POST["email"],
-        'password' => $_POST["password"],
+        'password' => password_hash($_POST["password"]),
         'user_type' => "user"
     ];
 

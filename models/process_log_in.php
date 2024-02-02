@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     //email
-    $email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
+    $email = $_POST["email"];
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION["error_message"] = "Niepoprawy adress";
@@ -20,46 +20,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    require_once "../config/config.php";
+    $apiUrl = "https://testspring69.azurewebsites.net/users/byEmail/". urlencode($email);
+    $response = file_get_contents($apiUrl);
 
-    $select = "SELECT * FROM users WHERE email = :email";
-    $checkUserStmt = $dbh->prepare($select);
-    $checkUserStmt->bindParam(':email', $email, PDO::PARAM_STR);
+    // Декодируем JSON-ответ в ассоциативный массив
+    $emailList = json_decode($response, true);
 
     try{
-        $checkUserStmt->execute();
-        if ($checkUserStmt->rowCount() == 1) {
-            $row = $checkUserStmt->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($emailList)) {
 
-                    if (password_verify($_POST['password'], $row[0]['password'])) {
+                    if (password_verify($_POST['password'], $emailList['password'])) {
                         $_SESSION['id'] = session_id();
-                        $_SESSION['id_users'] = $row[0]['id'];
-                        $_SESSION['username'] = $row[0]['username'];
-                        $_SESSION['email'] = $row[0]['email'];
-                        $_SESSION['user_form'] = $row[0]['user_type'];
-                        if ($_SESSION['user_form'] == 'admin') {
-                            header("Location: ../admin/admin.php");
-                        } else {
-                            header("Location: ../views/user_page.php");
-                        }
+                        $_SESSION['id_users'] = $emailList['id'];
+                        $_SESSION['username'] = $emailList['username'];
+                        $_SESSION['email'] = $emailList['email'];
+                        $_SESSION['user_form'] = $emailList['user_type'];
+                        header("Location: ../views/user_page.php");
                         exit();
                     } else {
                         $_SESSION["error_message"] = "Błędny login lub hasło!";
-                        header("Location: ../views/login_form.php");
+                        header("Location: https://webcdv.azurewebsites.net/views/login_form.php");
                         exit();
                     }
         } else {
             $_SESSION["error_message"] = "Błędny login lub hasło!";
-            header("Location: ../views/login_form.php");
+            header("Location: https://webcdv.azurewebsites.net/views/login_form.php");
             exit();
         }
     } catch (PDOException $e) {
         // Обработка ошибок базы данных
         $_SESSION["error_message"] = "Error BD: " . $e->getMessage();
-        header("Location: ../views/error_page.php");
+        header("Location: https://webcdv.azurewebsites.net/views/error_page.php");
         exit();
     }
 } else {
-    header("Location: ../views/login_form.php");
+    header("Location: https://webcdv.azurewebsites.net/views/login_form.php");
     exit();
 }
