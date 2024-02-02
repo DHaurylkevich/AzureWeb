@@ -76,9 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Проверка ответа от Spring-сервера
     $_SESSION['id'] = session_id();
-    $_SESSION['id_users'] = $resultData['data']['id'];
-    $_SESSION['username'] = $resultData['data']['username'];
-    $_SESSION['user_type'] = $resultData['data']['user_type'];
+    $_SESSION['id_users'] = $resultData['id'];
+    $_SESSION['username'] = $resultData['username'];
+    $_SESSION['user_type'] = $resultData['user_type'];
 
     echo "id  ". $_SESSION['id_users'];
     echo "name ". $_SESSION['username'];
