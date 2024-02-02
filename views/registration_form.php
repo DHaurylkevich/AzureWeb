@@ -38,12 +38,10 @@
         <?php
         session_start();
         if (isset($_SESSION["error_message"])){
-            echo <<< ERROR
-                    <p>Błąd!</p>
-                    <p>$_SESSION[error_message]</p>
-
-                    ERROR;
-
+            $error = $_SESSION["error_message"];
+            ?>
+            <h1><?=$error?></h1>
+            <?php
             unset($_SESSION["error_message"]);
         }
         ?>
