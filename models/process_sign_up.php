@@ -45,28 +45,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ]
     ];
 
-    $context = stream_context_create($options);
-// Инициализация cURL-сессии
-    $ch = curl_init($springApiUrl);
-// Установка параметров запроса
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($springData));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
 // Выполнение запроса
-    $result = curl_exec($ch);
-
-// Закрытие cURL-сессии
-    curl_close($ch);
+    $context = stream_context_create($options);
+    $result = file_get_contents($springApiUrl, false, $context);
 
 // Добавьте этот код для отладки
     echo "Spring API URL: $springApiUrl<br>";
     echo "Spring Data: " . json_encode($springData) . "<br>";
     echo "Result from Spring API: " . $result . "<br>";
 
+
     if ($result === FALSE) {
         $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika";
-        echo "3";
         header("Location: ../views/registration_form.php");
         exit();
     }
@@ -80,18 +70,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['username'] = $resultData['username'];
     $_SESSION['user_type'] = $resultData['user_type'];
 
-    echo "id  ". $_SESSION['id_users'];
+    echo "id ". $_SESSION['id_users'];
     echo "name ". $_SESSION['username'];
     echo "user type ". $_SESSION['user_type'];
 
+
     if ($_SESSION['user_type'] == "user") {
-        echo "1";
         header("Location: ../views/user_page.php");
         exit();
     }
     $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika: " . $resultData['message'];
-    header("Location: ../views/registration_form.php");
-    echo "2";
-    exit();
+        header("Location: ../views/registration_form.php");
+        exit();
 }
 ?>
