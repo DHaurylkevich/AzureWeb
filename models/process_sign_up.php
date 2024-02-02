@@ -5,40 +5,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fields_required = ["username", "email", "password", "cpassword"];
     $errors = [];
 
-    foreach ($fields_required as $field) {
-        if (empty($_POST[$field])) {
-            $errors[] = "Pole <b>$field</b> jest wymagane";
-        }
-    }
-    if (!empty($errors)) {
-        $_SESSION["error_message"] = implode("<br>", $errors);
-        header("Location: ../views/registration_form.php");
-        exit();
-    }
-
-    //Email
-    $email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION["error_message"] = "Niepoprawny adress";
-        header("Location: registration_form.php");
-        exit();
-    }
-
-    //Pass
-    if ($_POST["password"] != $_POST["cpassword"]) {
-        $_SESSION["error_message"] = "Hasła muszą być identyczne";
-        header("Location: ../views/registration_form.php");
-        exit();
-    } elseif (strlen($_POST["password"]) < 8) {
-        $_SESSION["error_message"] = "Password 8 symbols.";
-        header("Location: ../views/registration_form.php");
-        exit();
-    } elseif (!preg_match("/[A-Z]/", $_POST["password"]) || !preg_match("/[a-z]/", $_POST["password"]) || !preg_match("/[0-9]/", $_POST["password"])) {
-        $_SESSION["error_message"] = "The password must contain at least one uppercase letter, one lowercase letter, and one number.";
-        header("Location: ../views/registration_form.php");
-        exit();
-    }
+//    foreach ($fields_required as $field) {
+//        if (empty($_POST[$field])) {
+//            $errors[] = "Pole <b>$field</b> jest wymagane";
+//        }
+//    }
+//    if (!empty($errors)) {
+//        $_SESSION["error_message"] = implode("<br>", $errors);
+//        header("Location: ../views/registration_form.php");
+//        exit();
+//    }
+//
+//    //Email
+//    $email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
+//
+//    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//        $_SESSION["error_message"] = "Niepoprawny adress";
+//        header("Location: registration_form.php");
+//        exit();
+//    }
+//
+//    //Pass
+//    if ($_POST["password"] != $_POST["cpassword"]) {
+//        $_SESSION["error_message"] = "Hasła muszą być identyczne";
+//        header("Location: ../views/registration_form.php");
+//        exit();
+//    } elseif (strlen($_POST["password"]) < 8) {
+//        $_SESSION["error_message"] = "Password 8 symbols.";
+//        header("Location: ../views/registration_form.php");
+//        exit();
+//    } elseif (!preg_match("/[A-Z]/", $_POST["password"]) || !preg_match("/[a-z]/", $_POST["password"]) || !preg_match("/[0-9]/", $_POST["password"])) {
+//        $_SESSION["error_message"] = "The password must contain at least one uppercase letter, one lowercase letter, and one number.";
+//        header("Location: ../views/registration_form.php");
+//        exit();
+//    }
 
     //Username
     $username = htmlspecialchars(trim($_POST["username"]));
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $springApiUrl = "https://testspring69.azurewebsites.net/users/create";
     $springData = [
         'username' => $username,
-        'email' => $email,
+        'email' => $_POST["email"],
         'password' => $_POST["password"],
         'user_type' => "admin"  // Указать нужный тип пользователя
     ];
