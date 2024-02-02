@@ -103,14 +103,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
                      src="<?= $product['image']?>">
             </div>
         </div>
-        <?php
-        $response = file_get_contents($apiUrl);
 
-        // Декодируем JSON-ответ в ассоциативный массив
-        $products = json_decode($response, true);
-
-        foreach ($products as $product){
-        ?>
         <div class="product-info">
             <div class="product-name">
                 <h3><?=$product['title']?></h3>
@@ -128,10 +121,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
                     echo '<p>'.trim($size).'</p>';
                 }
                 ?>
-            </div>
-            <?php
-            }
-            ?>
+
             <div class="buttons">
                 <a href="product_form.php?action=add&id=<?=$productid?>">
                     <button class="buy-add button-buy">
