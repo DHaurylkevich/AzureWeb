@@ -28,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try{
         if (!empty($emailList)) {
-
                     if (password_verify($_POST['password'], $emailList['password'])) {
                         $_SESSION['id'] = session_id();
                         $_SESSION['id_users'] = $emailList['id'];
@@ -36,17 +35,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $_SESSION['email'] = $emailList['email'];
                         $_SESSION['user_form'] = $emailList['user_type'];
                         header("Location: ../views/user_page.php");
-                        exit();
                     } else {
                         $_SESSION["error_message"] = "Błędny login lub hasło!";
                         header("Location: https://webcdv.azurewebsites.net/views/login_form.php");
-                        exit();
                     }
         } else {
             $_SESSION["error_message"] = "Błędny login lub hasło!";
             header("Location: https://webcdv.azurewebsites.net/views/login_form.php");
-            exit();
         }
+        exit();
     } catch (PDOException $e) {
         // Обработка ошибок базы данных
         $_SESSION["error_message"] = "Error BD: " . $e->getMessage();

@@ -53,15 +53,15 @@
             </button>
         </a>
         <?php
-        if (isset($_SESSION["error_message"])){
-            echo <<< ERROR
-                <p>Błąd!</p>
-            <p>$_SESSION[error_message]</p>
-            ERROR;
-            //echo $_SESSION["error_message"];
+        if (isset($_SESSION["error_message"])) {
+            echo <<<ERROR
+        <p>Błąd!</p>
+        <p>{$_SESSION["error_message"]}</p>
+    ERROR;
             unset($_SESSION["error_message"]);
         }
         ?>
+
     </div>
 </main>
 
