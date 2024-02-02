@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo $emailList;
 
     try{
-        if (!empty($emailList)) {
+        if ($response) {
             echo "Password from form: " . $_POST['password'] . "<br>";
             echo "Hashed password from database: " . $emailList['password'] . "<br>";
                     if (password_verify($_POST['password'], $emailList['password'])) {
