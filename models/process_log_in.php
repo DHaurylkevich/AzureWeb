@@ -26,12 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Декодируем JSON-ответ в ассоциативный массив
     $emailList = json_decode($response, true);
-    echo $emailList;
 
     try{
         if ($response) {
-            echo "Password from form: " . $_POST['password'] . "<br>";
-            echo "Hashed password from database: " . $emailList['password'] . "<br>";
                     if (password_verify($_POST['password'], $emailList['password'])) {
                         $_SESSION['id'] = session_id();
                         $_SESSION['id_users'] = $emailList['id'];
