@@ -80,7 +80,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['username'] = $resultData['data']['username'];
     $_SESSION['user_type'] = $resultData['data']['user_type'];
 
-    echo "user type ". $resultData['data']['user_type'];
+    echo "id  ". $_SESSION['id_users'];
+    echo "name ". $_SESSION['username'];
+    echo "user type ". $_SESSION['user_type'];
 
     if ($_SESSION['user_type'] == "user") {
         echo "1";
