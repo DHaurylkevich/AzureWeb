@@ -24,33 +24,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: registration_form.php");
         exit();
     }
-    $apiUrl = "https://testspring69.azurewebsites.net/products/";
-    $response = file_get_contents($apiUrl);
-
-    // Декодируем JSON-ответ в ассоциативный массив
-    $product = json_decode($response, true);
-    $select = "SELECT * FROM users WHERE email = :email";
-    $checkUserStmt = $dbh->prepare($select);
-    $checkUserStmt->bindParam(':email', $email, PDO::PARAM_STR);
-    $checkUserStmt->execute();
-
-    if ($checkUserStmt->rowCount() == 1) {
-        $_SESSION["error_message"] = "Użytkownik o podanym adresie email już istnieje";
-        header("Location: registration_form.php");
-        exit();
-    }
 
     //Pass
     if ($_POST["password"] != $_POST["cpassword"]) {
         $_SESSION["error_message"] = "Hasła muszą być identyczne";
         header("Location: ../views/registration_form.php");
         exit();
-
-    }elseif(strlen($_POST["password"]) < 8){
+    } elseif (strlen($_POST["password"]) < 8) {
         $_SESSION["error_message"] = "Password 8 symbols.";
         header("Location: ../views/registration_form.php");
         exit();
-
     } elseif (!preg_match("/[A-Z]/", $_POST["password"]) || !preg_match("/[a-z]/", $_POST["password"]) || !preg_match("/[0-9]/", $_POST["password"])) {
         $_SESSION["error_message"] = "The password must contain at least one uppercase letter, one lowercase letter, and one number.";
         header("Location: ../views/registration_form.php");
@@ -60,34 +43,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //Username
     $username = htmlspecialchars(trim($_POST["username"]));
 
-    //подготовленный запрос для вставки данных
-    $insert = "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)";
-    $sth = $dbh->prepare($insert);
-    $sth->bindParam(':username', $username, PDO::PARAM_STR);
-    $sth->bindParam(':email', $email, PDO::PARAM_STR);
-    $sth->bindParam(':password', $pass, PDO::PARAM_STR);
+    // Отправка данных на Spring-сервер
+    $springApiUrl = "https://testspring69.azurewebsites.net/users/create";
+    $springData = [
+        'username' => $username,
+        'email' => $email,
+        'password' => $_POST["password"],
+        'user_type' => 'regular'  // Указать нужный тип пользователя
+    ];
 
-    $select = "SELECT id FROM users WHERE email = :email";
-    $stmt = $dbh->prepare($select);
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $options = [
+        'http' => [
+            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method' => 'POST',
+            'content' => http_build_query($springData)
+        ]
+    ];
 
-    try {
-        $pass = password_hash($_POST["password"], PASSWORD_ARGON2ID);
-        $sth->execute();
-        if ($sth->rowCount() == 1) {
-            $_SESSION["username"] = $username;
-            $stmt->execute();
-            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $context = stream_context_create($options);
+    $result = file_get_contents($springApiUrl, false, $context);
 
-            $_SESSION['id'] = session_id();
-            $_SESSION['id_users'] = $users[0]['id'];
+    if ($result === FALSE) {
+        $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika";
+        header("Location: ../views/registration_form.php");
+        exit();
+    }
 
+    $resultData = json_decode($result, true);
+
+    // Проверка ответа от Spring-сервера
+    if ($resultData['status'] === 'success') {
+        $_SESSION['id'] = session_id();
+        $_SESSION['id_users'] = $resultData['data']['id'];
+        $_SESSION['username'] = $resultData['data']['username'];
+
+        if ($_SESSION['user_form'] == 'admin') {
+            header("Location: ../admin/admin.php");
+        } else {
             header("Location: ../views/user_page.php");
-            exit();
         }
-    } catch (PDOException $e) {
-        $_SESSION["error_message"] = "Nie dodano użytkownika: " . $e->getMessage();
-        header("Location: ../views/registration_form.php"); // Перенаправление на страницу с формой
+        exit();
+    } else {
+        $_SESSION["error_message"] = "Nie udało się zarejestrować użytkownika: " . $resultData['message'];
+        header("Location: ../views/registration_form.php");
         exit();
     }
 }
