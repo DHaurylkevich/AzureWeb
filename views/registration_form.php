@@ -37,12 +37,6 @@
         </form>
         <?php
         session_start();
-
-        $error = $_SESSION["error_message"];
-        ?>
-        <h1><?=$error?></h1>
-
-        <?php
         if (isset($_SESSION["error_message"])){
             $error = $_SESSION["error_message"];
             ?>
