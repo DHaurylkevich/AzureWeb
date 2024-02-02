@@ -1,32 +1,28 @@
 <?php
 session_start();
 
-require_once "../config/config.php";
 
-if(isset($_GET['action']) && $_GET['action']=="add"){
+if (isset($_GET['action']) && $_GET['action'] == "add") {
+    $id = intval($_GET['id']);
 
-    $id=intval($_GET['id']);
-
-    if(isset($_SESSION['cart'][$id])){
-
+    if (isset($_SESSION['cart'][$id])) {
         $_SESSION['cart'][$id]['quantity']++;
         header("Location: product_form.php?id=$id");
         exit();
-    }else{
-
+    } else {
         $stmt = $dbh->query("SELECT * FROM products WHERE id = $id");
 
-        if($stmt->rowCount() == 1){
+        if ($stmt->rowCount() == 1) {
             $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $_SESSION['cart'][$row[0]['id']]=array(
+            $_SESSION['cart'][$row[0]['id']] = array(
                 "quantity" => 1,
                 "price" => $row[0]['price']
             );
             header("Location: product_form.php?id=$id");
             exit();
-        }else{
-            echo("ERerere");
+        } else {
+            echo("Error");
         }
     }
 }
@@ -45,80 +41,45 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 
 <body>
 <header id="header">
-    <div class="header-menu">
-        <a href="../index.php"><img id="logo"
-                                    src="https://logos-world.net/wp-content/uploads/2022/01/Playboi-Carti-Emblem.png"></a>
-        <div class="header-menu-item "><a href="News.php">News</a> </div>
-        <div class="header-menu-item"><a href="Sales.php">Sales</a> </div>
-        <div class="header-menu-item "><a href="FAQ.php">FAQ</a> </div>
-        <div class="header-menu-item "><a href="Contacts.php">Contacts</a> </div>
-        <div class="account"><a href="user_page.php"><img
-                        src="https://cdn-icons-png.flaticon.com/512/1250/1250689.png"></a> </div>
-        <div class="total">
-            <a href="cart_form.php">
-                <img src="https://cdn-icons-png.flaticon.com/512/1374/1374128.png">
-                <?php
-                $totalQuantity = 0;
-                if(isset($_SESSION['cart'])){
-                    foreach($_SESSION['cart'] as $item){
-                        $totalQuantity += $item['quantity'];
-                    }
-                }
-                echo $totalQuantity;
-                ?>
-            </a>
-        </div>
-    </div>
+    <!-- Header content here... -->
 </header>
+
 <main>
     <div class="category">
         <?php
         $apiUrl = "https://testspring69.azurewebsites.net/categories";
         $response = file_get_contents($apiUrl);
 
-        // Декодируем JSON-ответ в ассоциативный массив
         $listCategorys = json_decode($response, true);
 
         foreach ($listCategorys as $listCategory) {
             ?>
             <a href="../index.php?category=<?= $listCategory['name'] ?>" class="category-item"><?= $listCategory['name'] ?></a>
-        <?php }?>
+        <?php } ?>
     </div>
     <div class="product-border">
         <?php
         $productid = $_GET['id'];
 
-        // Заменяем код для взаимодействия с базой данных на обращение к вашему Spring API
-        $apiUrl = "https://testspring69.azurewebsites.net/products/=" . $productid;
+        $apiUrl = "https://testspring69.azurewebsites.net/products/" . $productid;
         $response = file_get_contents($apiUrl);
 
-        // Декодируем JSON-ответ в ассоциативный массив
         $product = json_decode($response, true);
-
         ?>
 
         <div class="product-pictures">
             <div class="main-photo ">
-                <img class="main-photo"
-                     src="<?= $product['image']?>">
+                <img class="main-photo" src="<?= $product['image'] ?>">
             </div>
         </div>
-        <?php
-        $apiUrl = "https://testspring69.azurewebsites.net/products/=" . $productid;
-        $response = file_get_contents($apiUrl);
 
-        // Декодируем JSON-ответ в ассоциативный массив
-        $products = json_decode($response, true);
-
-        foreach ($products as $product){
-        ?>
         <div class="product-info">
             <div class="product-name">
-                <h3><?=$product['title']?></h3>
-                <p><?=$product['price']?> zł</p>
+                <h3><?= $product['title'] ?></h3>
+                <p><?= $product['price'] ?> zł</p>
             </div>
             <div class="description">
-                <p><?=$product['description']?></p>
+                <p><?= $product['description'] ?></p>
             </div>
 
             <div class="product-size">
@@ -126,15 +87,13 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
                 $sizeString = $product['size'];
                 $sizes = explode(',', $sizeString);
                 foreach ($sizes as $size) {
-                    echo '<p>'.trim($size).'</p>';
+                    echo '<p>' . trim($size) . '</p>';
                 }
                 ?>
             </div>
-            <?php
-            }
-            ?>
+
             <div class="buttons">
-                <a href="product_form.php?action=add&id=<?=$productid?>">
+                <a href="product_form.php?action=add&id=<?= $productid ?>">
                     <button class="buy-add button-buy">
                         <p>Buy</p>
                     </button>
@@ -145,13 +104,13 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
             </div>
         </div>
     </div>
-    <div> </div>
+    <div> </div>
 </main>
+
 <footer class="footer">
-    <div class="footer-content">
-        <div class="footer-copyright">©&nbsp;2023 Red.com</div>
-    </div>
+    <!-- Footer content here... -->
 </footer>
+
 <script src="../script.js"></script>
 </body>
 
