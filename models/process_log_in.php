@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo("2");
         $_SESSION["error_message"] = "Niepoprawy adress";
         header("Location: registration_form.php");
         exit();
@@ -35,22 +36,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $_SESSION['email'] = $emailList['email'];
                         $_SESSION['user_form'] = $emailList['user_type'];
                         header("Location: ../views/user_page.php");
+                        exit();
                     } else {
+                        echo("6");
                         $_SESSION["error_message"] = "Błędny login lub hasło!";
                         header("Location: https://webcdv.azurewebsites.net/views/login_form.php");
+                        exit();
                     }
         } else {
+            echo("3");
             $_SESSION["error_message"] = "Błędny login lub hasło!";
             header("Location: https://webcdv.azurewebsites.net/views/login_form.php");
+            exit();
         }
-        exit();
     } catch (PDOException $e) {
+        echo("4");
         // Обработка ошибок базы данных
         $_SESSION["error_message"] = "Error BD: " . $e->getMessage();
         header("Location: https://webcdv.azurewebsites.net/views/error_page.php");
         exit();
     }
 } else {
+    echo("5");
     header("Location: https://webcdv.azurewebsites.net/views/login_form.php");
     exit();
 }

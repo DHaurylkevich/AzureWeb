@@ -54,10 +54,8 @@
         </a>
         <?php
         if (isset($_SESSION["error_message"])) {
-            echo <<<ERROR
-        <p>Błąd!</p>
-        <p>{$_SESSION["error_message"]}</p>
-    ERROR;
+            echo "        <p>Błąd!</p>
+        <p>{$_SESSION["error_message"]}</p>";
             unset($_SESSION["error_message"]);
         }
         ?>
