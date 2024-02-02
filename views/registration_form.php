@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +37,7 @@
             <a><button>Registration</button></a>
         </form>
         <?php
-        session_start();
+
         if (isset($_SESSION["error_message"])){
             $error = $_SESSION["error_message"];
             ?>

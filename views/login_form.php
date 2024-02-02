@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +25,7 @@
             <a href="cart_form.php">
                 <img src="https://cdn-icons-png.flaticon.com/512/1374/1374128.png">
                 <?php
-                session_start();
+
                 $totalQuantity = 0;
                 if(isset($_SESSION['cart'])){
                     foreach($_SESSION['cart'] as $item){
@@ -53,9 +54,11 @@
             </button>
         </a>
         <?php
-        if (isset($_SESSION["error_message"])) {
-            echo "        <p>Błąd!</p>
-        <p>{$_SESSION["error_message"]}</p>";
+        if (isset($_SESSION["error_message"])){?>
+            <h4 style="color: white;">
+                <?php echo $_SESSION['error_message'];?>
+            </h4>
+            <?php
             unset($_SESSION["error_message"]);
         }
         ?>

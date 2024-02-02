@@ -3,30 +3,30 @@ session_start();
 
 require_once "../config/config.php";
 
-if(isset($_GET['action']) && $_GET['action']=="add"){
+if (isset($_GET['action']) && $_GET['action'] == "add") {
 
-    $id=intval($_GET['id']);
+    $id = intval($_GET['id']);
 
-    if(isset($_SESSION['cart'][$id])){
+    if (isset($_SESSION['cart'][$id])) {
 
         $_SESSION['cart'][$id]['quantity']++;
         header("Location: product_form.php?id=$id");
         exit();
-    }else{
+    } else {
+        $apiUrl = "https://testspring69.azurewebsites.net/products/" . urlencode($id);
+        $response = file_get_contents($apiUrl);
 
-        $stmt = $dbh->query("SELECT * FROM products WHERE id = $id");
+        $productData = json_decode($response, true);
 
-        if($stmt->rowCount() == 1){
-            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            $_SESSION['cart'][$row[0]['id']]=array(
+        if (!empty($productData)) {
+            $_SESSION['cart'][$productData['id']] = array(
                 "quantity" => 1,
-                "price" => $row[0]['price']
+                "price" => $productData['price']
             );
             header("Location: product_form.php?id=$id");
             exit();
-        }else{
-            echo("ERerere");
+        } else {
+            $_SESSION['error_message'] = "Error fetching product data from Spring API";
         }
     }
 }
@@ -76,7 +76,6 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
         $apiUrl = "https://testspring69.azurewebsites.net/categories";
         $response = file_get_contents($apiUrl);
 
-        // Декодируем JSON-ответ в ассоциативный массив
         $listCategorys = json_decode($response, true);
 
         foreach ($listCategorys as $listCategory) {
@@ -88,11 +87,9 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
         <?php
         $productid = $_GET['id'];
 
-        // Заменяем код для взаимодействия с базой данных на обращение к вашему Spring API
         $apiUrl = "https://testspring69.azurewebsites.net/products/" . $productid;
         $response = file_get_contents($apiUrl);
 
-        // Декодируем JSON-ответ в ассоциативный массив
         $product = json_decode($response, true);
 
         ?>
@@ -128,9 +125,11 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
                         <p>Buy</p>
                     </button>
                 </a>
+                <a href="product_form.php?action=add&id=<?=$productid?>">
                 <button class="buy-add button-add">
                     <p>Add</p>
                 </button>
+                </a>
             </div>
         </div>
     </div>
