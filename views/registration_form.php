@@ -37,15 +37,15 @@
             <a><button>Registration</button></a>
         </form>
         <?php
-
-        if (isset($_SESSION["error_message"])){
-            $error = $_SESSION["error_message"];
-            ?>
-            <h1><?=$error?></h1>
+        if (isset($_SESSION["error_message"])){?>
+            <h4 style="color: white;">
+                <?php echo $_SESSION['error_message'];?>
+            </h4>
             <?php
             unset($_SESSION["error_message"]);
         }
         ?>
+
         <p>Do you already have an account?</p>
         <a href="login_form.php"><button>Log in</button></a>
     </div>

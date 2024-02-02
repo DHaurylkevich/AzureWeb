@@ -132,6 +132,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
                 </a>
             </div>
         </div>
+        </div>
     </div>
     <div> </div>
 </main>
