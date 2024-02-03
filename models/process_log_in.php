@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION["error_message"] = "Niepoprawy adress";
-        header("Location: registration_form.php");
+        header("Location: ../views/login_form.php");
         exit();
     }
 
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } catch (PDOException $e) {
         $_SESSION["error_message"] = "Error BD: " . $e->getMessage();
-        header("Location: https://webcdv.azurewebsites.net/views/error_page.php");
+        header("Location: https://webcdv.azurewebsites.net/views/login_form.php");
         exit();
     }
 } else {
