@@ -30,12 +30,13 @@ a:hover {
 }
 
 header {
+	height: 76px;
 	width: 100%;
-	background-color: #0d0d0e;
+	position: fixed;
+	background-color: #000;
 	color: #fff;
 	z-index: 100;
 }
-
 
 header img {
 	width: 100px;
@@ -43,7 +44,6 @@ header img {
 }
 
 header a {
-	font-size: large;
 	color: white;
 }
 
@@ -51,13 +51,6 @@ input {
 	border: 3px solid white;
 	border-radius: 5px;
 	height: 25px;
-}
-.search_img {
-	filter: invert(0.6);
-	padding: 0;
-	height: 20px;
-	width: 20px;
-	margin-left: 5px;
 }
 
 
@@ -117,25 +110,25 @@ h2 {
 
 #logo {
 	background-repeat: round;
-	/*background-image: url(https://i.gifer.com/4NB4.gif);
-	background-size: contain;*/
+	background-image: url(https://i.gifer.com/4NB4.gif);
+	background-size: contain;
 }
 
 
 
 .header-menu {
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	align-items: center;
-	width: 100%;
-
+	max-width: 90%;
+	width: 1220px;
 	margin: 0 auto;
 }
 
 
 .header-menu-item {
 	margin-right: 10px;
-
+	
 }
 
 

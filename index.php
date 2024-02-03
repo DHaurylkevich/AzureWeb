@@ -12,7 +12,31 @@ session_start();
 </head>
 
 <body>
-<?php include 'views/header.php'; ?>
+<header id="header">
+    <div class="header-menu">
+        <a href="index.php"><img id="logo" src="https://logos-world.net/wp-content/uploads/2022/01/Playboi-Carti-Emblem.png"></a>
+        <div class="header-menu-item "><a href="views/News.php">News</a> </div>
+        <div class="header-menu-item"><a href="views/Sales.php">Sales</a> </div>
+        <div class="header-menu-item "><a href="views/FAQ.php">FAQ</a> </div>
+        <div class="header-menu-item "><a href="views/Contacts.php">Contacts</a> </div>
+        <div class="account"><a href="views/user_page.php"><img src="https://cdn-icons-png.flaticon.com/512/1250/1250689.png"></a>
+        </div>
+        <div class="total">
+            <a href="views/cart_form.php">
+                <img src="https://cdn-icons-png.flaticon.com/512/1374/1374128.png">
+                <?php
+                $totalQuantity = 0;
+                if(isset($_SESSION['cart'])){
+                    foreach($_SESSION['cart'] as $item){
+                        $totalQuantity += $item['quantity'];
+                    }
+                }
+                echo $totalQuantity;
+                ?>
+            </a>
+        </div>
+    </div>
+</header>
 <main>
     <div class="category">
         <?php
