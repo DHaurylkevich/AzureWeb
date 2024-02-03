@@ -225,7 +225,6 @@ h2 {
 	background: #0d0d0e;
 	color: #fff;
 	width: 100%;
-
 	position: relative;
 	z-index: 10;
 	border-radius: 20px 20px 0 0;
@@ -286,14 +285,6 @@ footer a {
 .gap-ten{
 	grid-gap: 10px;
 	display: flex;
-}
-
-.footer-contect {
-	display: flex;
-	margin: 30px;
-	position: relative;
-	flex-wrap: wrap;
-	flex-direction: column;
 }
 
 .scroll-to-top-button {
