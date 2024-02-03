@@ -5,15 +5,15 @@
                 <img id="logo" src="https://logos-world.net/wp-content/uploads/2022/01/Playboi-Carti-Emblem.png"></a>
         </div>
         <div class="eighty-proc-div">
-            <img class="search_img" src="../styles/ico/search.png">
+            <img class="search_img" src="../styles_elements/ico/search.png">
             <input class="main_input">
         </div>
         <div class="ten-proc-div">
-            <div class="account"><a href="../html/user_page.php"><img
+            <div class="account"><a href="../views/user_page.php"><img
                             src="https://cdn-icons-png.flaticon.com/512/1250/1250689.png"></a>
             </div>
             <div class="total">
-                <a href="../html/cart_form.php">
+                <a href="../views/cart_form.php">
                     <img src="https://cdn-icons-png.flaticon.com/512/1374/1374128.png">
                     <?php
                     $totalQuantity = 0;
