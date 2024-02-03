@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $apiUrl = "https://testspring69.azurewebsites.net/users/byEmail/". urlencode($email);
     $response = file_get_contents($apiUrl);
 
-    // Декодируем JSON-ответ в ассоциативный массив
     $emailList = json_decode($response, true);
 
     try{
@@ -47,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     } catch (PDOException $e) {
-        // Обработка ошибок базы данных
         $_SESSION["error_message"] = "Error BD: " . $e->getMessage();
         header("Location: https://webcdv.azurewebsites.net/views/error_page.php");
         exit();

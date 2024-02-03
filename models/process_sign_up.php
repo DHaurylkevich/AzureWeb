@@ -45,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ]
     ];
 
-// Выполнение запроса
     $context = stream_context_create($options);
     $result = file_get_contents($springApiUrl, false, $context);
 
