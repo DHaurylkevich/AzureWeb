@@ -116,7 +116,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
                     echo '<p>'.trim($size).'</p>';
                 }
                 ?>
-
+        </div>
             <div class="buttons">
                 <a href="product_form.php?action=add&id=<?=$productid?>">
                     <button class="buy-add button-buy">
@@ -124,12 +124,11 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
                     </button>
                 </a>
                 <a href="product_form.php?action=add&id=<?=$productid?>">
-                <button class="buy-add button-add">
-                    <p>Add</p>
-                </button>
+                    <button class="buy-add button-add">
+                        <p>Add</p>
+                    </button>
                 </a>
             </div>
-        </div>
         </div>
     </div>
     <div> </div>
