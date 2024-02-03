@@ -68,7 +68,11 @@
         </form>
 
     </main>
-    <?php include 'views/footer.php'; ?>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">©&nbsp;2023 Red.com</div>
+        </div>
+    </footer>
     <script>
     </script>
 </body>

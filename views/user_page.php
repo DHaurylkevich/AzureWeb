@@ -50,7 +50,11 @@ if ($_SESSION["id"] != session_id() || session_status() != 2){
         <a href="../controllers/log_out.php"><button>Exit</button></a>
     </div>
 </main>
-<?php include 'views/footer.php'; ?>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-copyright">©&nbsp;2023 Red.com</div>
+    </div>
+</footer>
 </body>
 
 </html>

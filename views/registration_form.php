@@ -50,7 +50,11 @@
         <a href="login_form.php"><button>Log in</button></a>
     </div>
 </main>
-<?php include 'views/footer.php'; ?>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-copyright">©&nbsp;2023 Red.com</div>
+    </div>
+</footer>
 </body>
 
 </html>

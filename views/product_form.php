@@ -133,7 +133,11 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
     </div>
     <div> </div>
 </main>
-<?php include 'views/footer.php'; ?>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-copyright">©&nbsp;2023 Red.com</div>
+    </div>
+</footer>
 <script src="../script.js"></script>
 </body>
 

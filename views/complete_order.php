@@ -48,7 +48,11 @@ session_start();
 
     </div>
 </main>
-<?php include 'views/footer.php'; ?>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-copyright">©&nbsp;2023 Red.com</div>
+    </div>
+</footer>
 </body>
 <script>
     document.querySelector('.accordion-header').addEventListener('click', function() {
