@@ -41,15 +41,12 @@ if (isset($_POST['submit']) && isset($_SESSION['cart'])){
 
     if(!isset($_SESSION['id_users'])){
         $id_user= 0000;
-    }else{
-        $id_user= $_SESSION['id_users'];
+    }else {
+        $id_user = $_SESSION['id_users'];
     }
 
-
     unset($_SESSION['cart']);
-    // Перенаправление пользователя на страницу подтверждения покупки или другую страницу по вашему выбору
     $message = "Thank you for ordering id#";
-    /*$_SESSION['success_message'] = $messag.$row[0]['id'];*/
     header("Location: ../views/complete_order.php?success=" . urlencode($message));
     exit();
 }else{
