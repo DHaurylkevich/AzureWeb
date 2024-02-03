@@ -79,12 +79,7 @@ session_start();
 </main>
 <button onclick="scrollToTop()" id="scrollToTopBtn" class="scroll-to-top-button">▲</button>
 
-<footer class="footer">
-    <div class="footer-content">
-        <div class="footer-copyright">©&nbsp;2023 Red.com</div>
-    </div>
-
-</footer>
+<?php include 'views/footer.php'; ?>
 <script>
     var header = document.getElementById('header');
     var prevScrollPos = window.pageYOffset;

@@ -40,7 +40,7 @@ header {
 
 header img {
 	width: 100px;
-	padding: 5px 0px 0px;
+	padding: 5px 0 0;
 }
 
 header a {
@@ -222,16 +222,70 @@ h2 {
 }
 
 .footer {
-	position: relative;
-	top: 100px;
 	background: #0d0d0e;
 	color: #fff;
-	
-	padding: 30px;
+	width: 100%;
+
+	position: relative;
 	z-index: 10;
-	background-repeat: round;
-	background-image: url(https://i.pinimg.com/originals/fe/ae/ea/feaeea33c22a7a7195e430a9bfe538c5.gif);
-	background-size: contain;
+	border-radius: 20px 20px 0 0;
+
+}
+
+footer a {
+	color: white;
+}
+.footer_less_space {
+	width: 40%;
+}
+.footer_less_space img {
+
+}
+.ico-inst {
+	position: relative;
+	width: 32px;
+
+}
+.ico-pay {
+	position: relative;
+	width: 35px;
+	filter: ;
+}
+.icon-container {
+	width: 70px; /* Ширина контейнера */
+	align-items: center;
+	align-content: center;
+	display: flex;
+	overflow: hidden; /* Обрезание изображения, если оно не помещается */
+}
+
+.icon-container img {
+
+	width: 100%; /* Заполнение контейнера по ширине */
+	height: auto; /* Поддержание пропорций высоты */
+	object-fit: contain; /* Сохранение пропорций и вписывание изображения в контейнер */
+}
+
+.footer-contect {
+	display: flex;
+	align-items: center;
+	padding: 20px;
+}
+.help-link {
+	display: flex;
+	justify-content: space-between;
+	width: 96%;
+
+}
+.help-link-page {
+	display: flex;
+	gap: 25px;
+	align-items: center;
+
+}
+.gap-ten{
+	grid-gap: 10px;
+	display: flex;
 }
 
 .footer-contect {
