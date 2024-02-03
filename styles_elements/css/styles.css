@@ -190,7 +190,7 @@ h2 {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	grid-gap: 20px;
-	margin-bottom: 100px;
+	margin-bottom: 200px;
 }
 
 .products a {
